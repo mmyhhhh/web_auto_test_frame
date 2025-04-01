@@ -1,0 +1,30 @@
+pages:
+    - page:
+        pagename: navigation
+        desc: 首页导航tab及按钮
+        locator:
+          - name: home_page_tab
+            type: xpath
+            value: //a[text()="首页"]
+
+    - page:
+        pagename: home_page
+        desc: 首页元素
+        locator:
+          - name: login_button
+            type: xpath
+            value: //a[text()="登录"]
+
+          - name: login_username
+            type: xpath
+            value: //input[@id="username"]
+
+          - name: login_pwd
+            type: xpath
+            value: //input[@id="password"]
+
+          - name: login_submit
+            type: xpath
+            value: //div[@class="submit-btn"]/button
+
+

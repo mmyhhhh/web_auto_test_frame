@@ -1,0 +1,43 @@
+此框架适用于可通过后台配置改变前端页面显示的web自动化测试
+后端配置使用httprunner3调用接口获取配置信息
+前端使用pytest+allure来进行测试验证
+
+整体框架依然符合PO模式
+目录介绍：
+api_run: httprunner模块，用于编写yml用例和执行
+         .env：全局变量文件，通过控制写入控制环境更换
+         testcases：编写yml用例
+         debugtalk.py : 用于存放公共函数和指定httprunner的根目录
+
+commom：通用文件处理
+        constant.py : 常量处理，主要用来处理文件路径
+        do_config.py: 配置文件封装
+        mylog.py: 日志封装
+        request_utils.py: requests请求封装（此框架中并未用到）
+
+config：配置文件存放文件夹
+        env.config： 配置文件
+
+outputs：输出文件夹
+        logs：日志输出文件夹
+        reports：报告输出文件夹（可配置输出pytest报告，此框架中未使用）
+        results：allure结果输出文件夹
+        screenshots：截图存放文件夹
+
+pagelocators: web元素定位文件夹
+        page_locators.yml 使用yml文件来进行web元素定位配置，
+                          每个page是一个页面的元素，locator下name为元素名称（自定义，用于后续引用），type：定位方式，value：定位值
+                          定位方式支持：xpath、id、class、tag、name、link text、partial link text
+        page_locator.py  对元素进行定位进行封装
+                         Locator类会读取page_locators.yml文件，并且将每个页面都设置为类属性，属性值为每个页面元素定位列表，
+                         然后调用PageLoc类将每个元素的name设置为属性，属性值为type和value
+                         这样用例中使用Locator().pagename.elename就可以获得元素的定位方式及值，然后再调用定位方法进行定位
+
+pages: 页面操作文件夹，存放每个页面的元素定位、鼠标移动、点击等页面操作，每个页面单独一个py文件
+
+testcases: 测试用例存放文件夹
+           conftest.py  pytest的conftest文件，用于初始化webdriver，设置执行环境，获取后端配置数据等
+           test_home_page.py 测试用例文件，可以每个页面一个py文件
+
+testdatas： 测试数据存放文件夹，主要是存放测试用例数据的
+

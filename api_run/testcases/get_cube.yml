@@ -1,0 +1,28 @@
+config:
+  name: get_op_cube
+  base_url: ${ENV(base_url)}
+  export:
+    - cube
+
+teststeps:
+
+  - name: get_op_cube
+    request:
+      url: /admin/store/custom/cube/${get_cube_id()}
+      method: GET
+      headers:
+        host: ${ENV(host)}
+        Authorization: ${op_token_type} ${op_access_token}
+        Origin: ${ENV(base_url)}
+        Referer: ${ENV(base_url)}/
+      params:
+        region: cn
+        page: 1
+        per: 10
+        kind: 5
+        platform: 1
+        status: 1
+    extract:
+        cube: body.data
+    validate:
+          - eq: ["status_code",200]

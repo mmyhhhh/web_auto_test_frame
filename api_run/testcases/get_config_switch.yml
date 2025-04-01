@@ -1,0 +1,29 @@
+config:
+  name: get_op_configure_switch
+  base_url: ${ENV(base_url)}
+  export:
+    - configure_switch
+
+teststeps:
+  - name: login
+    testcase: testcases/login.yml
+    export:
+      - op_access_token
+      - op_token_type
+      - op_account_id
+
+  - name: get_op_configure_switch
+    request:
+      url: /configure/switch
+      method: GET
+      headers:
+        host: ${ENV(host)}
+        Authorization: ${op_token_type} ${op_access_token}
+        Origin: ${ENV(base_url)}
+        Referer: ${ENV(base_url)}/
+      params:
+        region: cn
+    extract:
+      configure_switch: body.data
+    validate:
+      - eq: ["status_code",200]

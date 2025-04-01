@@ -1,0 +1,35 @@
+
+config:
+  name: login
+  base_url: ${ENV(base_url)}
+  export:
+    - op_access_token
+    - op_token_type
+    - op_account_id
+
+teststeps:
+  - name: user login
+    request:
+      url: /api/test_token
+      method: POST
+      headers:
+        host: ${ENV(host)})
+        Accept: application
+        Origin: ${ENV(base_url)}
+        Referer: ${ENV(base_url)}/
+        Content-Type: application/x-www-form-urlencoded
+      params:
+        locale: js
+
+      data:
+        remember_me: true
+        email_or_phone_number_eq: ${ENV(number)}
+        password: ${ENV(pwd)}
+
+    extract:
+      op_access_token: body.access_token
+      op_token_type: body.token_type
+      op_account_id: body.id
+
+    validate:
+      - eq: ["status_code",200]
