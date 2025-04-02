@@ -40,4 +40,8 @@ testcases: 测试用例存放文件夹
            test_home_page.py 测试用例文件，可以每个页面一个py文件
 
 testdatas： 测试数据存放文件夹，主要是存放测试用例数据的
+basepage.py: 页面通用操作文件，其他页面类继承此页面类
+main.py：pytest执行文件，项目用例执行入口文件
+pytest.ini : pytest 配置文件
+requirements.txt：此项目需要安装的插件及版本号，需要注意pytest和httprunner3的版本，版本不一致可能存在兼容性问题
 
