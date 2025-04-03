@@ -1,6 +1,6 @@
 此框架适用于可通过后台配置改变前端页面显示的web自动化测试
 后端配置使用httprunner3调用接口获取配置信息
-前端使用pytest+allure来进行测试验证
+前端使用pytest+selenium+allure来进行测试验证
 
 整体框架依然符合PO模式
 目录介绍：
@@ -45,3 +45,9 @@ main.py：pytest执行文件，项目用例执行入口文件
 pytest.ini : pytest 配置文件
 requirements.txt：此项目需要安装的插件及版本号，需要注意pytest和httprunner3的版本，版本不一致可能存在兼容性问题
 
+切换不同的测试环境思路：
+1、通过pytest命令行参数：--env=“test” 或者 --env=“product” 切换是测试环境执行还是线上环境执行
+2、pytest的conftest.py文件获取命令参数--env的值，获取env.config配置文件中对应环境的base_url，用于初始化前端浏览器
+3、同时通过fixture函数get_op_configure，获取--env的值，并且将env.config配置文件中后端中对应环境的全局变量写入httprunner3的.env文件中，httprunner3的yml用例文件中引用.env文件的全局变量
+
+注：此框架还可以将api_run文件夹单独拿出来做httprunner3的接口自动化测试用例，或者将selenium更换为uiautomator2做安卓app的自动化测试
